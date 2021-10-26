@@ -1,0 +1,48 @@
+﻿CREATE OR REPLACE WRAPPER JSON rest_api_test_new1
+    DATASOURCENAME=rest_api_test
+    TUPLEROOT '/JSONFile'
+    OUTPUTSCHEMA (jsonfile = 'JSONFile' : REGISTER OF (
+        count = 'count' : 'java.lang.Integer',
+        entries = 'entries' : ARRAY OF (
+            entries = 'entries' : REGISTER OF (
+                api = 'API' : 'java.lang.String',
+                description = 'Description' : 'java.lang.String',
+                https = 'HTTPS' : 'java.lang.String',
+                cors = 'Cors' : 'java.lang.String',
+                link = 'Link' : 'java.lang.String',
+                category = 'Category' : 'java.lang.String',
+                auth = 'Auth' : 'java.lang.String'
+            )
+        )
+    )
+    );
+
+CREATE OR REPLACE TYPE rest_api_test_new1_entries_entries AS REGISTER OF (api:text, description:text, https:text, cors:text, link:text, category:text, auth:text);
+
+CREATE OR REPLACE TYPE rest_api_test_new1_entries AS ARRAY OF rest_api_test_new1_entries_entries;
+
+CREATE OR REPLACE TABLE rest_api_test_new1 I18N us_pst (
+        count:int,
+        entries:rest_api_test_new1_entries
+    )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD rest_api_test_new1(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD count NOS ZERO ()
+             ADD entries NOS ZERO ()
+             ADD entries NOS ZERO ()
+             ADD entries.api NOS ZERO ()
+             ADD entries.description NOS ZERO ()
+             ADD entries.https NOS ZERO ()
+             ADD entries.cors NOS ZERO ()
+             ADD entries.link NOS ZERO ()
+             ADD entries.category NOS ZERO ()
+             ADD entries.auth NOS ZERO ()
+        )
+        OUTPUTLIST (count, entries
+        )
+        WRAPPER (json rest_api_test_new1)
+    );
+
