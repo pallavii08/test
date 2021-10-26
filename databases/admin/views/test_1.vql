@@ -1,0 +1,100 @@
+﻿CREATE OR REPLACE WRAPPER JSON test_1
+    DATASOURCENAME=test
+    TUPLEROOT '/JSONFile'
+    OUTPUTSCHEMA (jsonfile = 'JSONFile' : REGISTER OF (
+        data = 'data' : ARRAY OF (
+            data = 'data' : REGISTER OF (
+                idnation_0 = 'ID Nation' : 'java.lang.String',
+                nation = 'Nation' : 'java.lang.String',
+                idyear_0 = 'ID Year' : 'java.lang.Integer',
+                year = 'Year' : 'java.lang.String',
+                population = 'Population' : 'java.lang.Integer',
+                slugnation_0 = 'Slug Nation' : 'java.lang.String'
+            )
+        ),
+        source = 'source' : ARRAY OF (
+            source = 'source' : REGISTER OF (
+                measures = 'measures' : ARRAY OF (
+                    measures = 'measures' : REGISTER OF (
+                        field_0 = 'field_0' : 'java.lang.String'
+                    )
+                ),
+                annotations = 'annotations' : REGISTER OF (
+                    source_name = 'source_name' : 'java.lang.String',
+                    source_description = 'source_description' : 'java.lang.String',
+                    dataset_name = 'dataset_name' : 'java.lang.String',
+                    dataset_link = 'dataset_link' : 'java.lang.String',
+                    table_id = 'table_id' : 'java.lang.String',
+                    topic = 'topic' : 'java.lang.String',
+                    subtopic = 'subtopic' : 'java.lang.String'
+                ),
+                name = 'name' : 'java.lang.String',
+                substitutions = 'substitutions' : ARRAY OF (
+                    substitutions = 'substitutions' : REGISTER OF (
+                        field_0 = 'field_0' : 'java.lang.String'
+                    )
+                )
+            )
+        )
+    )
+    );
+
+CREATE OR REPLACE TYPE test_data_data AS REGISTER OF (idnation_0:text, nation:text, idyear_0:int, year:text, population:int, slugnation_0:text);
+
+CREATE OR REPLACE TYPE test_data AS ARRAY OF test_data_data;
+
+CREATE OR REPLACE TYPE test_source_source_measures_measures AS REGISTER OF (field_0:text);
+
+CREATE OR REPLACE TYPE test_source_source_measures AS ARRAY OF test_source_source_measures_measures;
+
+CREATE OR REPLACE TYPE test_source_source_annotations AS REGISTER OF (source_name:text, source_description:text, dataset_name:text, dataset_link:text, table_id:text, topic:text, subtopic:text);
+
+CREATE OR REPLACE TYPE test_source_source_substitutions_substitutions AS REGISTER OF (field_0:text);
+
+CREATE OR REPLACE TYPE test_source_source_substitutions AS ARRAY OF test_source_source_substitutions_substitutions;
+
+CREATE OR REPLACE TYPE test_source_source AS REGISTER OF (measures:test_source_source_measures, annotations:test_source_source_annotations, name:text, substitutions:test_source_source_substitutions);
+
+CREATE OR REPLACE TYPE test_source AS ARRAY OF test_source_source;
+
+CREATE OR REPLACE TABLE test_1 I18N us_pst (
+        data:test_data,
+        source:test_source
+    )
+    PRIMARY KEY ( 'data' , 'source' )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD test_1(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD data NOS ZERO ()
+             ADD data NOS ZERO ()
+             ADD data.idnation_0 NOS ZERO ()
+             ADD data.nation NOS ZERO ()
+             ADD data.idyear_0 NOS ZERO ()
+             ADD data.year NOS ZERO ()
+             ADD data.population NOS ZERO ()
+             ADD data.slugnation_0 NOS ZERO ()
+             ADD source NOS ZERO ()
+             ADD source NOS ZERO ()
+             ADD source.measures NOS ZERO ()
+             ADD source.measures NOS ZERO ()
+             ADD source.measures.field_0 NOS ZERO ()
+             ADD source.annotations NOS ZERO ()
+             ADD source.annotations.source_name NOS ZERO ()
+             ADD source.annotations.source_description NOS ZERO ()
+             ADD source.annotations.dataset_name NOS ZERO ()
+             ADD source.annotations.dataset_link NOS ZERO ()
+             ADD source.annotations.table_id NOS ZERO ()
+             ADD source.annotations.topic NOS ZERO ()
+             ADD source.annotations.subtopic NOS ZERO ()
+             ADD source.name NOS ZERO ()
+             ADD source.substitutions NOS ZERO ()
+             ADD source.substitutions NOS ZERO ()
+             ADD source.substitutions.field_0 NOS ZERO ()
+        )
+        OUTPUTLIST (data, source
+        )
+        WRAPPER (json test_1)
+    );
+

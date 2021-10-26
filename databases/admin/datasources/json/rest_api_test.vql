@@ -1,0 +1,6 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE JSON rest_api_test
+    ROUTE HTTP 'http.CommonsHttpClientConnection,120000' GET '${databases.admin.datasources.json.rest_api_test.ROUTE.HTTP.URL}'
+    AUTHENTICATION OFF
+    PROXY OFF;
+
