@@ -57,7 +57,7 @@ CREATE OR REPLACE TYPE test_source_source AS REGISTER OF (measures:test_source_s
 
 CREATE OR REPLACE TYPE test_source AS ARRAY OF test_source_source;
 
-CREATE OR REPLACE TABLE test_1 I18N us_pst (
+CREATE OR REPLACE TABLE test_133 I18N us_pst (
         data:test_data,
         source:test_source
     )
