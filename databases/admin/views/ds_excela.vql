@@ -1,0 +1,31 @@
+﻿CREATE OR REPLACE TABLE ds_excela I18N us_pst (
+        column_0:double (sourcetypeid = '8'),
+        column_1:text (sourcetypeid = '12'),
+        column_2:text (sourcetypeid = '12'),
+        column_3:text (sourcetypeid = '12'),
+        column_4:text (sourcetypeid = '12'),
+        column_5:text (sourcetypeid = '12'),
+        column_6:text (sourcetypeid = '12'),
+        column_7:text (sourcetypeid = '12'),
+        sheet_name:text (sourcetypeid = '12')
+    )
+    CACHE OFF
+    TIMETOLIVEINCACHE DEFAULT
+    ADD SEARCHMETHOD ds_excela(
+        I18N us_pst
+        CONSTRAINTS (
+             ADD column_0 (any) OPT ANY
+             ADD column_1 (any) OPT ANY
+             ADD column_2 (any) OPT ANY
+             ADD column_3 (any) OPT ANY
+             ADD column_4 (any) OPT ANY
+             ADD column_5 (any) OPT ANY
+             ADD column_6 (any) OPT ANY
+             ADD column_7 (any) OPT ANY
+             ADD sheet_name (any) OPT ANY
+        )
+        OUTPUTLIST (column_0, column_1, column_2, column_3, column_4, column_5, column_6, column_7, sheet_name
+        )
+        WRAPPER (custom ds_excela)
+    );
+

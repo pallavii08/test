@@ -1,0 +1,26 @@
+﻿# REQUIRES-PROPERTIES-FILE - # Do not remove this comment!
+CREATE OR REPLACE DATASOURCE CUSTOM ds_excela
+    CLASSNAME='com.denodo.vdb.contrib.wrapper.xls.ExcelWrapper';
+
+CREATE OR REPLACE WRAPPER CUSTOM ds_excela
+    DATASOURCENAME=ds_excela
+    PARAMETERS (
+      'Type of file' = 'Excel 2007 or later (*.xlsx)',
+      'File location' = ROUTE LOCAL 'LocalConnection' '${databases.admin.views.custom.ds_excela.File location.ROUTE.LOCAL.PATH}',
+      'Extract data from all sheets' = true,
+      'Extract sheet name as a new column' = true,
+      'Has headers' = false,
+      'Stream tuples' = false
+    )
+    OUTPUTSCHEMA (
+        column_0 = 'Column_0' : 'java.lang.Double' (OPT) (sourcetypeid='8')  SORTABLE,
+        column_1 = 'Column_1' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        column_2 = 'Column_2' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        column_3 = 'Column_3' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        column_4 = 'Column_4' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        column_5 = 'Column_5' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        column_6 = 'Column_6' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        column_7 = 'Column_7' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE,
+        sheet_name = 'sheet_name' : 'java.lang.String' (OPT) (sourcetypeid='12')  SORTABLE
+    );
+
